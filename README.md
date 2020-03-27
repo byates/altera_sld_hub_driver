@@ -22,3 +22,17 @@ For more information:
 
 http://rocketboards.org/foswiki/view/Projects/RemoteSystemDebug
 https://www.altera.com/content/dam/altera-www/global/en_US/pdfs/literature/an/an_693.pdf
+
+## Usage instructions:
+
+* Instantiate the SLD Hub Controller System component in QSYS. The s0 port (Avalon slave) is connected to the HPS h2f_lw_axi_master.
+* Record the address and optionally lock the address. Putting addresses on 4KiB boundaries is also recommended.
+* Add the following in the device tree (where ADDR is the QSYS reported address):
+```
+sldhub_link: debugger@ADDR {
+      #address-cells = <1>;
+      #size-cells = <1>;
+      compatible = "altr,mm-debug-link-1.0";
+      reg = <ADDR 0x80>;
+}; //end debugger@ADDR
+```
