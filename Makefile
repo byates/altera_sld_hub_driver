@@ -1,23 +1,15 @@
 obj-m += altera_sld_hub_driver.o
 
-ifndef ALTERA_SOC_LINUX_KERNEL_LOC
-$(error ALTERA_SOC_LINUX_KERNEL_LOC is undefined. Set it to the linux kernel directory)
+ifndef SOC_LINUX_KERNEL_LOC
+$(error SOC_LINUX_KERNEL_LOC is undefined. Set it to the linux kernel directory)
 endif
 
-KDIR ?= $(ALTERA_SOC_LINUX_KERNEL_LOC)
+.PHONY: default
+default: all ;
 
-default:
-	$(MAKE) -C $(KDIR) M=$$PWD
-	./copy_to_target.sh altera_sld_hub_driver.ko
+all:
+	$(MAKE) -C $(SOC_LINUX_KERNEL_LOC) M=$$PWD
+	rm -f  *.o .*.o.*
+	rm -f  *.order *.symvers  *.mod.*  .*.ko.*
+	rm -rf .tmp_versions
 
-clean:
-	$(MAKE) -C $(KDIR) M=$$PWD clean
-
-help:
-	$(MAKE) -C $(KDIR) M=$$PWD help
-
-modules:
-	$(MAKE) -C $(KDIR) M=$$PWD modules
-
-modules_install:
-	$(MAKE) -C $(KDIR) M=$$PWD modules_install

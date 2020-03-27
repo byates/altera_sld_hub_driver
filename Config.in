@@ -1,0 +1,4 @@
+config BR2_PACKAGE_ALTERA_SLD_HUB_DRIVER
+	bool "Driver to control the SLD core in an Altera SoC FPGA"
+	help
+	  Linux Kernel Module for the SLD core in an Altera SoC FPGA.
